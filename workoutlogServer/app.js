@@ -35,8 +35,14 @@ var User = sequelize.define('user',{
 //mathces the model we defied 
 // doesnt drop the db 
 User.sync();
-// User.sync({force:true}); // drops the table completely 
 
+// ***************************
+// //**********DANGER************DANGER************DANGER********
+// // **********DANGER************DANGER************DANGER********
+// // ****************** User.sync({force:true}); *******************
+// // ***** DANGER THIS CODE WILL DROP ALL DATA STORED IN THE DB ****
+// // **********DANGER************DANGER************DANGER********
+// // **********DANGER************DANGER************DANGER********
 app.use(bodyParser.json());
 
 app.post('/api/user', function(req, res) {
@@ -48,7 +54,7 @@ app.post('/api/user', function(req, res) {
   //sequelize - take the user model and go out to the db and create this:
   User.create({
     username:username,
-    passwordhash:pass
+    passwordhash: ''
   }).then(
     //sequelize is going to return the object it created from the db
             function createSuccess(user){
