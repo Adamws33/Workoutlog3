@@ -1,7 +1,22 @@
+var sequelize = require('./db.js')
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
-// var bodyParcer = require('body-parcer');
+var User = sequelize.import('./models/user');
+
+
+//created the table in postgres
+//mathces the model we defied 
+// doesnt drop the db 
+User.sync();
+// //**********DANGER************DANGER************DANGER********
+// // **********DANGER************DANGER************DANGER********
+// // ****************** User.sync({force:true}); *******************
+// // ***** DANGER THIS CODE WILL DROP ALL DATA STORED IN THE DB ****
+// // **********DANGER************DANGER************DANGER********
+// // **********DANGER************DANGER************DANGER********
+
+app.use(bodyParser.json());
 
 // saying to require the addition of headers from this file to have additional information sent along 
 app.use(require('./middleware/headers'))
@@ -11,39 +26,9 @@ app.use('/api/test', function(req,res){
   res.send("Hello World")
 })
 
-var Sequelize = require('sequelize');
-var sequelize = new Sequelize('workoutlog', 'postgres', 'familia7', {
-    host:'localhost',
-    dialect: 'postgres'
+app.listen(3000, function(){
+  console.log('app is open on 3000')
 });
-
-sequelize.authenticate().then(
-    function(){
-      console.log('connected to workoutlog postgress db');
-    },
-    function(err){
-      console.log('err');
-    }
-);
- 
-var User = sequelize.define('user',{
-    username: Sequelize.STRING,
-    passwordhash: Sequelize.STRING,
-});
-
-//created the table in postgres
-//mathces the model we defied 
-// doesnt drop the db 
-User.sync();
-
-// ***************************
-// //**********DANGER************DANGER************DANGER********
-// // **********DANGER************DANGER************DANGER********
-// // ****************** User.sync({force:true}); *******************
-// // ***** DANGER THIS CODE WILL DROP ALL DATA STORED IN THE DB ****
-// // **********DANGER************DANGER************DANGER********
-// // **********DANGER************DANGER************DANGER********
-app.use(bodyParser.json());
 
 app.post('/api/user', function(req, res) {
   //when we post to API uder, it will want a user object in the body
@@ -57,18 +42,15 @@ app.post('/api/user', function(req, res) {
     passwordhash: ''
   }).then(
     //sequelize is going to return the object it created from the db
-            function createSuccess(user){
-              //sucessfull get this
-              res.json({
-                user: user,
-                message: 'created'
-              });
-            },
-            function createError(err){
-              res.send(500, err.message);
-            }
-         );
+    function createSuccess(user){
+      //sucessfull get this
+      res.json({
+        user: user,
+        message: 'created'
+      });
+    },
+    function createError(err){
+      res.send(500, err.message);
+    }
+  );
 })
-app.listen(3000, function(){
-  console.log('app is open on 3000')
-});
