@@ -2,10 +2,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var sequelize = require('./db.js')
-
-var User = sequelize.import(__dirname+'/models/user');
-
-
+var User = sequelize.import(__dirname+'/models/user.js');
 
 //created the table in postgres
 //mathces the model we defied 
@@ -15,13 +12,15 @@ User.sync();
 // // **********DANGER************DANGER************DANGER********
 // // ****************** User.sync({force:true}); *******************
 // // ***** DANGER THIS CODE WILL DROP ALL DATA STORED IN THE DB ****
-// // **********DANGER************DANGER************DANGER********
+// // **********DANGER************DANGER************DANGER******** 
 // // **********DANGER************DANGER************DANGER********
 
 app.use(bodyParser.json());
 // saying to require the addition of headers from this file to have additional information sent along 
+
 app.use(require('./middleware/headers'))
 app.use('/api/user', require('./routes/user'));
+app.use('/api/login', require('./routes/session'));
 // sending the string "hello world" to the api/test location for the client to pull through a header
 app.use('/api/test', function(req,res){
   res.send("Hello World")
