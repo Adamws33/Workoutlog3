@@ -3,7 +3,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var sequelize = require('./db.js')
-var User = sequelize.import(__dirname+'/models/user.js');
+var User = sequelize.import('./models/user.js');
 
 //created the table in postgres
 //mathces the model we defied 
@@ -23,6 +23,8 @@ app.use(require('./middleware/headers'))
 app.use(require('./middleware/validate-session'));
 app.use('/api/user', require('./routes/user'));
 app.use('/api/login', require('./routes/session'));
+// app.use('/api/definition', require('./routes/definition'));
+// app.use('/api/log', require('./routes/log'));
 // sending the string "hello world" to the api/test location for the client to pull through a header
 app.use('/api/test', function(req,res){
   res.send("Hello World")

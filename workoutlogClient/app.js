@@ -1,7 +1,6 @@
 // wait for Jquery to be ready
 $(function(){
   var WorkoutLog = (function($, undefined){
-
       //private
       var API_BASE = "http://localhost:3000/api/";
       var userDefinitions = [];
@@ -25,6 +24,42 @@ $(function(){
   })(jQuery);
 
     //iife immedietly invoked function expression
+
+    $('.nav-tabs a[data-toggle="tab"]').on("click", function(e) {
+      var token = window.localStorage.getItem("sessionToken");
+      if ($(this).hasClass("disabled") && !token) {
+         e.preventDefault();
+         return false;
+      }
+    });
+      // bind tab changes events
+      $('.nav-tabs a[data-toggle="tab"]').on("click", function(e) {
+        var target = $(e.target).attr("href"); //activated tab
+        if (target === '#log'){
+          WorkoutLog.log.setDefinitions();
+        }
+
+        if (target === '#history'){
+          WorkoutLog.log.setHistory();
+        }
+      });
+    $(document).on("keypress", function(e){
+      if(e.which ===13) { //enter key
+        if($("#signup-modal").is(':visible')){
+          $("#signup").trigger("click");
+        }
+        if ($("#login-modal").is(":visible")){
+          $("#login").trigger("click");
+        }
+      }
+    });
+    var token= window.localStorage.getItem("sessionToken");
+    if(token){
+      WorkoutLog.setAuthHeader(token);
+    }
+
+    //expose this to the workoutlog modules
+    window.WorkoutLog=WorkoutLog;
 
 
 
