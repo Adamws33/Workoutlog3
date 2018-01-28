@@ -1,3 +1,4 @@
+require('dotenv').config();
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
@@ -19,6 +20,7 @@ app.use(bodyParser.json());
 // saying to require the addition of headers from this file to have additional information sent along 
 
 app.use(require('./middleware/headers'))
+app.use(require('./middleware/validate-session'));
 app.use('/api/user', require('./routes/user'));
 app.use('/api/login', require('./routes/session'));
 // sending the string "hello world" to the api/test location for the client to pull through a header
