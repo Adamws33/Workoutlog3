@@ -30,8 +30,8 @@ app.use('/api/login', require('./routes/session'));
 app.use('/api/definition', require('./routes/definition'));
 // app.use('/api/log', require('./routes/log'));
 // sending the string "hello world" to the api/test location for the client to pull through a header
-// app.use('/api/test', function(req,res){
-//   res.send("Hello World")
+app.use('/api/test', function(req,res){
+  res.send("Hello World")
 })
 
 app.listen(3000, function(){
