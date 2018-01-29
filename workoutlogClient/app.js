@@ -53,6 +53,17 @@ $(function(){
         }
       }
     });
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+      var target = $(e.target).attr("href"); // activated tab
+      if (target === "#log") {
+         WorkoutLog.log.setDefinitions();
+      }
+ 
+      if (target === "#history") {
+         WorkoutLog.log.setHistory();
+      }
+   });
+
     var token= window.localStorage.getItem("sessionToken");
     if(token){
       WorkoutLog.setAuthHeader(token);
@@ -60,31 +71,32 @@ $(function(){
 
     //expose this to the workoutlog modules
     window.WorkoutLog=WorkoutLog;
-
-
-
-
-
-
-
-
-
-
-
-	$("#testAPI").on("click", function(){
-		console.log("It is working");
   });
 
-  // calling an ajax get to 
-  var test = $.ajax({
-    type: "GET",
-    url: "http://localhost:3000/api/test"
-  })
-  .done(function(data){
-    // this is logging the info recieved from the API
-    console.log(data);
-  })
-.fail(function(){
-    console.log("Oh no!");
-  });
-});
+
+
+
+
+
+
+
+
+
+
+// 	$("#testAPI").on("click", function(){
+// 		console.log("It is working");
+//   });
+
+//   // calling an ajax get to 
+//   var test = $.ajax({
+//     type: "GET",
+//     url: "http://localhost:3000/api/test"
+//   })
+//   .done(function(data){
+//     // this is logging the info recieved from the API
+//     console.log(data);
+//   })
+// .fail(function(){
+//     console.log("Oh no!");
+//   });
+// });
