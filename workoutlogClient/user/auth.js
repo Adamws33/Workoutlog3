@@ -30,6 +30,9 @@ $(function(){
           $("#signup-modal").modal("hide");
           $(".disabled").removeClass("disabled");
           $("#loginout").text("Logout");
+          $('a[href="#define"]').tab('show');
+          $("#su_username").val("");
+          $("#su_password").val("");
 
         })
         .fail(function() {
@@ -59,6 +62,10 @@ $(function(){
             $("#login-modal").modal("hide");
             $(".disabled").removeClass("disabled");
             $("#loginout").text("Logout");
+            
+            $("#li_username").val("");
+            $("#li_password").val(""); 
+            $('a[href="#define"]').tab("show");
 
           })
           .fail(function() {
